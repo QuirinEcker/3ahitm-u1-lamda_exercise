@@ -1,7 +1,7 @@
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class Pupil {
+public class Pupil implements Comparable {
     private int id;
     private String firstName;
     private String lastName;
@@ -15,6 +15,8 @@ public class Pupil {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = LocalDate.parse(birthDay, dtf);
+        this.postcode = postcode;
+        this.city = city;
     }
 
     public int getId() {
@@ -39,5 +41,23 @@ public class Pupil {
 
     public String getCity() {
         return city;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        try {
+            if (o instanceof Pupil) {
+                return this.birthDate.compareTo(((Pupil) o).birthDate);
+            } else throw new Exception("Wrong Type");
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+
+        return 0;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s %s was born on %s and lives in %d %s", getFirstName(), getLastName(), getBirthDate(), getPostcode(), getCity());
     }
 }
